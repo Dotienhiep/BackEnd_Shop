@@ -27,10 +27,16 @@ const notFound = require('./middleware/not-found')
 
 app.use(cors({
     origin: "http://localhost:3000",
-    // allowedHeaders:'*',
+    allowedHeaders:'*',
     credentials: true,  
     // exposedHeaders: ["set-cookie"]
 }))
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
 app.use(express.json())
 app.use(cookieParser(process.env.JWT_SECRET))
 app.use(express.urlencoded({ extended: false }))
